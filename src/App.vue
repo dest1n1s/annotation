@@ -446,6 +446,8 @@ const allowSubmit = computed(() => {
 })
 
 const annotationIndex = ref<number | null>(null)
+const certify1 = ref(false)
+const certify2 = ref(false)
 
 const submitAnnotation = async () => {
   const annotation = eTasks.value!.map((task) => {
@@ -674,6 +676,19 @@ onMounted(async () => {
                       </td>
                     </tr>
                   </table>
+                  <div class="mt-3 mx-4">
+                    <div
+                      class="hover:bg-neutral-300 hover:bg-opacity-50 -m-1 p-1 transition cursor-pointer rounded-lg select-none transition"
+                      @click="certify1 = !certify1"
+                    >
+                      <input
+                        class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="checkbox"
+                        :checked="certify1"
+                      />
+                      I certify that I have read and understand all the instructions.
+                    </div>
+                  </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>
               <v-expansion-panel>
@@ -775,11 +790,34 @@ onMounted(async () => {
                       src="https://cdn.jsdelivr.net/gh/dest1n1s/static_files@master/assets/annotation10.png"
                     />
                   </template>
+
+                  <div class="mt-3 mx-4">
+                    <div
+                      class="hover:bg-neutral-300 hover:bg-opacity-50 -m-1 p-1 transition cursor-pointer rounded-lg select-none transition"
+                      @click="certify2 = !certify2"
+                    >
+                      <input
+                        class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="checkbox"
+                        :checked="certify2"
+                      />
+                      I certify that I have read and understand all the examples.
+                    </div>
+                  </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>
-              <v-expansion-panel v-if="annotationIndex !== null">
+              <v-expansion-panel
+                v-if="annotationIndex !== null"
+                :disabled="!(certify1 && certify2)"
+              >
                 <v-expansion-panel-title>
                   <span class="font-weight-bold mr-1">Tasks</span>(click to expand/collapse)
+                  <span
+                    v-if="!(certify1 && certify2)"
+                    class="text-red font-bold ml-3"
+                  >
+                    Please read all the instructions and examples!
+                  </span>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
                   <template
