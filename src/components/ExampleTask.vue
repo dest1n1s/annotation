@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-lg py-2 font-bold">Step 1</h2>
+    <h2 class="text-lg py-2 font-bold">Question 1</h2>
     <div class="flex justify-center py-2">
       <div class="w-max border px-10 py-2">
         <p class="py-2">General Goal: {{ generalGoal }}</p>
@@ -59,7 +59,7 @@
 
     <v-divider class="mt-4" />
 
-    <h2 class="text-lg py-2 font-bold">Step 2</h2>
+    <h2 class="text-lg py-2 font-bold">Question 2</h2>
 
     <div class="flex justify-center">
       <div class="w-4/5 min-h-full mx-5 my-4 flex flex-col">
@@ -123,42 +123,11 @@
 
     <v-divider class="mt-4" />
 
-    <h2 class="text-lg py-2 font-bold">Step 3</h2>
+    <h2 class="text-lg py-2 font-bold">Question 3</h2>
 
-    <p class="py-2">Read the plan. Can the plan accomplish the Specific Goal?</p>
     <p class="py-2">
-      We show you below <span class="text-red font-bold">TWO SIMILAR GOALS WITH PLANS</span> to help
-      you judge whether the plan can achieve the goal.
+      Read the plan. Are the steps in the plan correct in achieving the Specific Goal?
     </p>
-
-    <v-expansion-panels class="mt-2 mb-4">
-      <v-expansion-panel>
-        <v-expansion-panel-title>
-          <span class="font-weight-bold mr-1">Similar goals with plans</span>(click to
-          expand/collapse)
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <div
-            v-for="(v, i) in similarGoals"
-            :key="i"
-            class="flex justify-center"
-          >
-            <div class="w-4/5 min-h-full mx-5 my-4 flex flex-col">
-              <div class="border px-3 flex-grow-1">
-                <p class="py-2">Specific Goal: {{ v.goal }}</p>
-                <div class="py-2">
-                  Plan:
-                  <StepList
-                    :steps="v.steps"
-                    disabled
-                  ></StepList>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
 
     <div class="flex justify-center w-full">
       <v-item-group

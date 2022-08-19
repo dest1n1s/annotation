@@ -501,10 +501,7 @@ onMounted(async () => {
     ...task,
     steps: convertPlan(task.Plan),
     selection: [0, 0, 0],
-    'Similar Goals with Plans': task['Similar goals with plans'].map((similarGoal) => ({
-      goal: similarGoal['Specific Goal'],
-      steps: convertPlan(similarGoal.Plan)
-    }))
+    'Similar Goals with Plans': []
   }))
 
   annotationIndex.value = response.data.index
@@ -531,24 +528,47 @@ onMounted(async () => {
                   <span class="font-weight-bold mr-1">Instructions</span>(click to expand/collapse)
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  <p class="py-2">Thanks for participating in this HIT!</p>
+                  <p class="py-2">
+                    Thanks for participating in this HIT!
+                    <span class="text-red font-bold">
+                      Please spend some time reading this instruction and the example section to
+                      better understand our HIT!
+                    </span>
+                  </p>
 
                   <p class="py-2">
-                    You will read a general goal about everyday activities and a specific goal which
-                    inherits the general goal but is more specific and has a reasonable
-                    <span class="text-red font-bold">CONSTRAINT</span>. Your first task is to check
-                    whether the specific goal is reasonable.
+                    In this hit, you need to complete 20 data labeling tasks. In each task, you will
+                    be presented a general goal about everyday activities (such as “make a cake”)
+                    and a specific goal which inherits the general goal but is more specific and has
+                    a reasonable <span class="text-red font-bold">CONSTRAINT</span> (such as “make a
+                    chocolate cake”). You will answer 3 questions for each task.
                   </p>
                   <p class="py-2">
-                    Then, you will read a plan toward the specific goal with actionable steps. Your
-                    second task is to check whether the plan
-                    <span class="text-red font-bold">MEET THE CONSTRAINT</span> and whether the plan
-                    can indeed accomplish the given goal. If the plan can not accomplish the given
-                    goal, you need to point out the wrong steps and
-                    <span class="text-red font-bold">SELECT THE ERROR TYPES</span>.
+                    <span class="font-bold">Question 1</span> <br />
+                    In Question 1, you need to assess whether the specific goal is reasonable. For
+                    example, making a chocolate cake is a reasonable constraint of making a cake,
+                    whereas making a lego cake is not reasonable.
+                  </p>
+                  <p class="py-2">
+                    <span class="font-bold">Question 2</span> <br />
+                    Then, you will read a plan of the specific goal with actionable steps (in the
+                    cake’s example, the plan is the steps towards making a cake). Question 2 is to
+                    check whether the plan
+                    <span class="text-red font-bold">MEETS THE CONSTRAINT</span>. If the specific
+                    goal is making a chocolate cake and the plan does not mention chocolate, then it
+                    does not meet the constraint.
+                  </p>
+                  <p class="py-2">
+                    <span class="font-bold">Question 3</span> <br />
+                    In Question 3, you will assess whether the plan can indeed accomplish the given
+                    goal. If the plan can not accomplish the given goal, you need to point out the
+                    wrong steps and
+                    <span class="text-red font-bold">SELECT THE ERROR TYPES</span>. A plan for
+                    making chocolate cake might mention chocolate, but if its baking instructions
+                    are wrong, then you need to reflect it in Question 3.
                   </p>
                   <div class="py-2">
-                    Notes:
+                    <span class="font-bold">Notes:</span>
                     <ul class="list-disc pl-5">
                       <li>
                         A general goal involves
@@ -567,17 +587,20 @@ onMounted(async () => {
                         </ul>
                       </li>
                       <li>
-                        You may disagree with the specific goal, but you
-                        <span class="text-red font-bold">SHOULD PRETEND IT IS CORRECT</span> when
-                        doing the remaining question.
+                        If you think the specific goal is not reasonable, choose NO in Question 1,
+                        but still proceed with Question 2 and 3 pretending that it is reasonable.
+                        For example, making a LEGO cake is not reasonable, but you can still assess
+                        whether the corresponding plan meets the constraint or not. Remember you can
+                        always choose “I am not sure”.
                       </li>
                       <li>
-                        You <span class="text-red font-bold">CAN NOT</span> ignore grammar and
+                        You <span class="text-red font-bold">SHOULD NOT</span> ignore grammar and
                         spelling mistakes in the plan.
                       </li>
                       <li>
                         You can <span class="text-red font-bold">SEARCH GOOGLE</span> to help you
-                        judge whether the plan can achieve the goal.
+                        judge whether the plan can achieve the goal, especially if you are not sure
+                        about the plan.
                       </li>
                     </ul>
                   </div>
