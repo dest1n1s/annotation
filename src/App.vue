@@ -467,8 +467,7 @@ const submitAnnotation = async () => {
   })
   console.log(annotation)
   finalData.value = JSON.stringify(annotation)
-  const urlParams = new URLSearchParams(window.location.search)
-  assignmentId.value = urlParams.get('assignmentId')!
+
   status.value = 'Pending...'
   try {
     // const response = await axios.post(
@@ -487,24 +486,31 @@ const submitAnnotation = async () => {
 }
 
 onMounted(async () => {
-  const response = await axios.post(
-    'https://afazpkw56gfqbbqsepg3sim52y0bjgbk.lambda-url.us-east-2.on.aws/',
-    'hello_fudan',
-    {
-      headers: {
-        'Content-Type': 'text/plain'
+  const urlParams = new URLSearchParams(window.location.search)
+  assignmentId.value = urlParams.get('assignmentId')!
+
+  console.log(assignmentId.value)
+
+  if (assignmentId.value !== 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+    const response = await axios.post(
+      'https://afazpkw56gfqbbqsepg3sim52y0bjgbk.lambda-url.us-east-2.on.aws/',
+      'hello_fudan',
+      {
+        headers: {
+          'Content-Type': 'text/plain'
+        }
       }
-    }
-  )
+    )
 
-  tasks.value = response.data.data.map((task: { [x: string]: any[]; Plan: string[] }) => ({
-    ...task,
-    steps: convertPlan(task.Plan),
-    selection: [0, 0, 0],
-    'Similar Goals with Plans': []
-  }))
+    tasks.value = response.data.data.map((task: { [x: string]: any[]; Plan: string[] }) => ({
+      ...task,
+      steps: convertPlan(task.Plan),
+      selection: [null, null, null],
+      'Similar Goals with Plans': []
+    }))
 
-  annotationIndex.value = response.data.index
+    annotationIndex.value = response.data.index
+  }
 })
 </script>
 
@@ -883,7 +889,7 @@ onMounted(async () => {
                     id="mturk_form"
                     ref="mturkForm"
                     method="post"
-                    action="https://workersandbox.mturk.com/mturk/externalSubmit"
+                    action="https://www.mturk.com/mturk/externalSubmit"
                   >
                     <input
                       id="assignmentId"
@@ -910,7 +916,7 @@ onMounted(async () => {
                 v-else
                 class="mt-2 flex justify-center text-md"
               >
-                Fetching Task Data...
+                Fetching Task Data... (Not available in preview)
               </div>
             </v-expansion-panels>
           </v-col>
